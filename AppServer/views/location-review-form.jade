@@ -1,0 +1,32 @@
+extends layout
+block content
+  .row.banner
+    .col-12
+      h1 Add Review #{locationName ? 'for ' + locationName : ''}
+  .row
+    .col-12.col-md-8
+      if error
+        .alert.alert-danger #{error}
+      form(action="/location/review", method="post", role="form")
+        if formData
+          input(type="hidden", name="locationName", value=formData.locationName)
+        .form-group.row
+          label.col-10.col-sm-2.col-form-label(for="name") Name
+          .col-12.col-sm-10
+            input#name.form-control(name="name", required, value=formData ? formData.name : '')
+        .form-group.row
+          label.col-10.col-sm-2.col-form-label(for="rating") Rating
+          .col-12.col-sm-2
+            select#rating.form-control.input-sm(name="rating", required)
+              option(value="") Select rating
+              option(value="5", selected=formData && formData.rating === '5') 5 stars
+              option(value="4", selected=formData && formData.rating === '4') 4 stars
+              option(value="3", selected=formData && formData.rating === '3') 3 stars
+              option(value="2", selected=formData && formData.rating === '2') 2 stars
+              option(value="1", selected=formData && formData.rating === '1') 1 star
+        .form-group.row
+          label.col-sm-2.col-form-label(for="review") Review
+          .col-sm-10
+            textarea#review.form-control(name="review", rows="5", required) #{formData ? formData.review : ''}
+        button.btn.btn-primary.float-right Add my review
+    .col-12.col-md-4

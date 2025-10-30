@@ -1,0 +1,49 @@
+extends layout
+block content
+  .row.banner
+    .col-12
+      h1 #{location.name}
+  .row
+    .col-12.col-lg-9
+      .row
+        .col-12.col-md-6
+          p #{location.address}
+          .card.card-primary
+            .card-block
+              h2.card-title Opening hours
+              each day, hours in location.openingHours
+                p.card-text #{day} : #{hours}
+          .card.card-primary
+            .card-block
+              h2.card-title Facilities
+              each facility in location.facilities
+                span.badge.badge-warning
+                  i.fa.fa-check
+                  |   #{facility}
+                |  
+        .col-12.col-md-6.location-map
+          .card.card-primary
+            .card-block
+              h2.card-title Location map
+              iframe(
+                width="100%",
+                height="300",
+                frameborder="0",
+                style="border:0",
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2444.190282286933!2d-0.9711322842187294!3d51.45426787962502!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4874204821e2b45b%3A0x2c2d0e18bff5d693!2sReading%20Central%20Library!5e0!3m2!1sen!2suk!4v1631184523456",
+                allowfullscreen
+              )
+    .col-12
+      .card.card-primary.review-card
+        .card-block
+          a.btn.btn-primary.float-right(href=`/location/review/new?location=${location.name}`) Add review
+          h2.card-title Customer reviews
+          each review in location.reviews
+            .row.review
+              .col-12.no-gutters.review-header
+                span.reviewAuthor #{review.author}
+                small.reviewTimestamp #{review.date}
+              .col-12
+                p #{review.review}
+    .col-12.col-lg-3
+      p.lead #{location.description}
